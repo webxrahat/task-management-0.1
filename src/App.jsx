@@ -1,9 +1,18 @@
 import "./App.css";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+import TaskBoard from "./components/tasks/TaskBoard";
 
 function App() {
   return (
     <>
-      <div>My app</div>
+      <>
+        <Header />
+        <Hero />
+        <TaskBoard />
+        <Footer />
+      </>
     </>
   );
 }
