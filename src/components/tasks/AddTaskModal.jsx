@@ -1,6 +1,11 @@
 import { useState } from "react";
 
-export default function AddTaskModal({ setshowTaskModal, onSave, getUpdate }) {
+export default function AddTaskModal({
+  setshowTaskModal,
+  onSave,
+  getUpdate,
+  handleClose,
+}) {
   const [getTasks, setGetTasks] = useState(
     getUpdate || {
       id: crypto.randomUUID(),
@@ -21,7 +26,7 @@ export default function AddTaskModal({ setshowTaskModal, onSave, getUpdate }) {
     if (name === "tags") {
       value = value.split(",");
 
-      console.log(value);
+      // console.log(value);
     }
 
     setGetTasks({
@@ -35,7 +40,7 @@ export default function AddTaskModal({ setshowTaskModal, onSave, getUpdate }) {
   return (
     <>
       <div
-        onClick={() => setshowTaskModal(false)}
+        onClick={handleClose}
         className="bg-black absolute top-0 left-0 z-10 h-full w-full opacity-75"
       ></div>
 
@@ -106,7 +111,7 @@ export default function AddTaskModal({ setshowTaskModal, onSave, getUpdate }) {
 
         <div className="mt-16 flex justify-center gap-3 lg:mt-20">
           <button
-            onClick={() => setshowTaskModal(false)}
+            onClick={handleClose}
             type="button"
             className="rounded bg-red-600 px-4 py-2 text-white transition-all hover:opacity-80"
           >

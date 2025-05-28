@@ -41,22 +41,56 @@ export default function TaskBoard() {
     setshowTaskModal(true);
   };
 
+  const handleClose = () => {
+    setshowTaskModal(false);
+    setGetUpdate(null);
+  };
+  const handleDelete = (deleteTask) => {
+    // console.log("click");
+    const remove = tasks.filter((task) => task.id !== deleteTask.id);
+    return setTasks(remove);
+
+    // console.log("delete", remove);
+  };
+
+  const handleAllDelete = () => {
+    tasks.length = 0;
+    setTasks([...tasks]);
+  };
+
+  const handleFavoriteOrNot = (favoriteId) => {
+    // console.log("click", favoriteId);
+    const taskIndex = tasks.findIndex((task) => task.id === favoriteId);
+    const newtasks = [...tasks];
+    newtasks[taskIndex].isFavorite = !newtasks[taskIndex].isFavorite;
+    setTasks(newtasks);
+  };
+
   return (
     <section className="mb-20 text-white flex justify-center" id="tasks">
       <div className="container">
         <SearchTesk />
 
         <div className="rounded-xl border border-[rgba(206,206,206,0.12)] bg-[#1D212B] px-6 py-8 md:px-9 md:py-16">
-          <TaskAction handleAddTask={() => setshowTaskModal(true)} />
+          <TaskAction
+            handleAddTask={() => setshowTaskModal(true)}
+            handleAllDelete={handleAllDelete}
+          />
           {showTaskModal && (
             <AddTaskModal
               setshowTaskModal={setshowTaskModal}
               onSave={handleAddTask}
               getUpdate={getUpdate}
+              handleClose={handleClose}
             />
           )}
 
-          <TaskList tasks={tasks} handleEdit={handleEdit} />
+          <TaskList
+            tasks={tasks}
+            handleEdit={handleEdit}
+            handleDelete={handleDelete}
+            handleFavoriteOrNot={handleFavoriteOrNot}
+          />
         </div>
       </div>
     </section>
