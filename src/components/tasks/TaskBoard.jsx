@@ -14,7 +14,7 @@ export default function TaskBoard() {
     isFavorite: true,
   };
 
-  const [tasks, setTasks] = useState([defaultTask]);
+  const [tasks, setTasks] = useState([]);
   const [showTaskModal, setshowTaskModal] = useState(false);
   const [getUpdate, setGetUpdate] = useState(null);
 
@@ -54,7 +54,6 @@ export default function TaskBoard() {
   };
 
   const handleAllDelete = () => {
-    tasks.length = 0;
     setTasks([...tasks]);
   };
 
@@ -66,10 +65,19 @@ export default function TaskBoard() {
     setTasks(newtasks);
   };
 
+  const onSearchText = (value) => {
+    const searchvalue = tasks.filter((task) =>
+      task.title?.toLowerCase().includes(value.toLowerCase())
+    );
+
+    setTasks([...searchvalue]);
+    console.log("value", searchvalue);
+  };
+
   return (
     <section className="mb-20 text-white flex justify-center" id="tasks">
       <div className="container">
-        <SearchTesk />
+        <SearchTesk onSearchText={onSearchText} />
 
         <div className="rounded-xl border border-[rgba(206,206,206,0.12)] bg-[#1D212B] px-6 py-8 md:px-9 md:py-16">
           <TaskAction
@@ -84,13 +92,16 @@ export default function TaskBoard() {
               handleClose={handleClose}
             />
           )}
-
-          <TaskList
-            tasks={tasks}
-            handleEdit={handleEdit}
-            handleDelete={handleDelete}
-            handleFavoriteOrNot={handleFavoriteOrNot}
-          />
+          {tasks.length > 0 ? (
+            <TaskList
+              tasks={tasks}
+              handleEdit={handleEdit}
+              handleDelete={handleDelete}
+              handleFavoriteOrNot={handleFavoriteOrNot}
+            />
+          ) : (
+            <p>No Task Found</p>
+          )}
         </div>
       </div>
     </section>

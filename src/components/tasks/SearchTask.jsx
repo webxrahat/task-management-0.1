@@ -1,6 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 
-export default function SearchTesk() {
+export default function SearchTesk({ onSearchText }) {
+  const [searchtream, setSearchtream] = useState("");
+
+  const handleSearchText = (e) => {
+    e.preventDefault();
+    onSearchText(searchtream);
+
+    // console.log("click");
+  };
+
+  // console.log("searchtream", searchtream);
+
   return (
     <div className="p-2 flex justify-end">
       <form>
@@ -11,9 +22,12 @@ export default function SearchTesk() {
               id="search-dropdown"
               className="z-20 block w-full bg-gray-800 px-4 py-2 pr-10 focus:outline-none"
               placeholder="Search Task"
+              value={searchtream}
+              onChange={(e) => setSearchtream(e.target.value)}
               required
             />
             <button
+              onClick={handleSearchText}
               type="submit"
               className="absolute right-2 top-0 h-full rounded-e-lg text-white md:right-4"
             >
